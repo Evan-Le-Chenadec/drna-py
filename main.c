@@ -4,33 +4,34 @@
 #include <search.h>
 
 
-/* TODO : make mutliple functions to transform a DNA strand into a RNA strand or protein sequence */ 
-/* Generate the hasmap */
-void genRNAPRT(void );
-void genDNAPRT(void );
+/* TODO : make mutliple functions to transform a DNA strand into a RNA strand or protein sequence */
+/* Generate the hashmap */
+char genRNAPRT(void);
+char genDNAPRT(void);
 
 /* DNA conversions */ 
-char DNA_to_RNA(char DNA);
-char DNA_to_PRT(char DNA);
+char DNA_to_RNA(char *DNA);
+char DNA_to_PRT(char *DNA);
 
 /* RNA conversions */ 
-char RNA_to_PRT(char RNA);
-char RNA_to_DNA(char RNA);
+char RNA_to_PRT(char *RNA);
+char RNA_to_DNA(char *RNA);
 
-/* TODO for later because of a complex implementation*/ 
+/* TODO for later because of a complex implementation*/
+/* How do you reverse a hashmap ? */
 char PRT_to_RNA(char PRT);
 char PRT_to_DNA(char PRT);
 
 /* Test script*/ 
-void main()
+int main(void)
 {
-	const char DNA;
+	const char DNA[1];
 	return 0;
 }
 
-void genRNAPRT()
+char genRNAPRT()
 {
-    size_t table_size = 64;
+    const size_t table_size = 64;
 
     /* Creating the hashmap*/ 
     
@@ -50,21 +51,20 @@ void genRNAPRT()
     		    "Cys", "Cys", "STP", "Trp", "Arg", "Arg", "Arg", "Arg", "Ser", "Ser", "Arg", "Arg", "Gly", "Gly", "Gly", "Gly", };
     int num_entries = sizeof(rnas) / sizeof(rnas[0]);
 
-    /* Et le programme, il met les valeurs DANS la hasmap */ 
+    /* Et le programme, il met les valeurs DANS la hashmap */
     for (int i = 0; i < num_entries; i++) {
         ENTRY item, *found;
         item.key = rnas[i];
         item.data = aas[i];
 
         if (hsearch(item, ENTER) == NULL) {
-            fprintf(stderr, "Failed to insert %s\n", keys[i]);
+            fprintf(stderr, "Failed to insert %s\n", aas[i]);
         }
     }
 
 }
 
-
-void genDNAPRT()
+char genDNAPRT()
 {
     size_t table_size = 64;
 
@@ -93,18 +93,18 @@ void genDNAPRT()
         item.data = aas[i];
 
         if (hsearch(item, ENTER) == NULL) {
-            fprintf(stderr, "Failed to insert %s\n", keys[i]);
+            fprintf(stderr, "Failed to insert %s\n", aas[i]);
         }
     }
 
 }
 
-
-char DNA_to_RNA(char DNA)
+char DNA_to_RNA(char *DNA)
 {
-	/* Linear search function searching for "T" in the DNA strand and swapping them for an "U" */ 
-	char RNA[];
-	length = sizeof(DNA) / sizeof(DNA[0]);
+	/* Linear search function searching for "T" in the DNA strand and swapping them for an "U" */
+
+	int const length = sizeof(DNA) / sizeof(DNA[0]);
+	char RNA[length];
 	for (int i=1; i<length; i++)
 	{
 		if (DNA[i] == "T")
@@ -119,11 +119,11 @@ char DNA_to_RNA(char DNA)
 	return RNA; 
 }
 
-char RNA_to_DNA(char RNA)
+char RNA_to_DNA(char *RNA)
 {
 	/* Linear search function searching for "U" in the RNA strand and swapping them for an "T" */ 
 	char DNA[];
-	length = sizeof(RNA) / sizeof(RNA[0]);
+	int length = sizeof(RNA) / sizeof(RNA[0]);
 	for (int i=1; i<length; i++)
 	{
 		if (RNA[i] == "T")
@@ -138,10 +138,10 @@ char RNA_to_DNA(char RNA)
 	return DNA;
 }
 
-char RNA_to_PRT(char PRT)
+char RNA_to_PRT(char *PRT)
 {
 	char PRT[];
-	length = sizeof(RNA) / sizeof(RNA[0]);
+	int length = sizeof(RNA) / sizeof(RNA[0]);
 	map = genDNAPRT();
 	for (int i=1; i<lentgh; i++)
 	{
@@ -162,11 +162,11 @@ char RNA_to_PRT(char PRT)
 	return PRT
 }
 
-char DNA_to_PRT(char PRT)
+char DNA_to_PRT(char *PRT)
 {
 	char PRT[];
-	length = sizeof(DNA) / sizeof(DNA[0]);
-	gen
+	int length = sizeof(DNA) / sizeof(DNA[0]);
+	genDNA = genDNAPRT();
 	for (int i=1; i<lentgh; i++)
 	{
 		char *search_key = DNA[i];
