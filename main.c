@@ -21,19 +21,6 @@ char RNA_to_DNA(char RNA);
 char PRT_to_RNA(char PRT);
 char PRT_to_DNA(char PRT);
 
-/* Hashmap of RNA to AA*/ 
-
-static char *RNA[] =
-{
-	
-}
-
-/* Hashmap of DNA to AA*/ 
-static char *DNA[] =
-{
-	
-}
-
 /* Test script*/ 
 void main()
 {
