@@ -3,11 +3,15 @@
 #include <string.h>
 #include <search.h>
 #include <signal.h>
+#include <iso646.h>
 
 /* TODO : make mutliple functions to transform a DNA strand into a RNA strand or protein sequence */
 /* Generate the hashmap */
 void genRNAPRT(void);
 void genDNAPRT(void);
+
+/* ORF search and addition */
+char* ORF_search(char *DNA);
 
 /* DNA conversions */ 
 char* DNA_to_RNA(char *DNA);
@@ -25,8 +29,35 @@ char PRT_to_DNA(char PRT);
 /* Test script*/ 
 int main(void)
 {
-	const char DNA[1];
+	const char DNA[3] = "DNA";
+	char codon = DNA[0]+DNA[1]+DNA[2];
 	return 0;
+}
+
+int compt_ORF(char *DNA) {
+	int n = 0;
+	for (int i=0; i<strlen(DNA)-2; i++) {
+		char codon[] = DNA[i]+DNA[i+1]+DNA[i+2];
+		if (codon == 'ATC')
+		{
+			n +=1;
+		}
+	}
+	return n;
+}
+
+char* ORF_search(char *DNA) {
+	char list_orf[];
+	for (int i = 0; i < strlen(DNA)-2; i++) {
+		char codon[] = DNA[i]+DNA[i+1]+DNA[i+2];
+		if codon == 'ATC'
+		{
+			while (codon != 'TAA') or (codon != 'TGA') or (codon!= 'TAG'))
+			{
+
+			}
+		}
+	}
 }
 
 void genRNAPRT()
