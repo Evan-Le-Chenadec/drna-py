@@ -2,23 +2,23 @@
 #include <stdlib.h>
 #include <string.h>
 #include <search.h>
-
+#include <signal.h>
 
 /* TODO : make mutliple functions to transform a DNA strand into a RNA strand or protein sequence */
 /* Generate the hashmap */
-char genRNAPRT(void);
-char genDNAPRT(void);
+void genRNAPRT(void);
+void genDNAPRT(void);
 
 /* DNA conversions */ 
-char DNA_to_RNA(char *DNA);
+char* DNA_to_RNA(char *DNA);
 char DNA_to_PRT(char *DNA);
 
 /* RNA conversions */ 
 char RNA_to_PRT(char *RNA);
-char RNA_to_DNA(char *RNA);
+char* RNA_to_DNA(char *RNA);
 
 /* TODO for later because of a complex implementation*/
-/* How do you reverse a hashmap ? */
+/* How do you reverse a hashmap? */
 char PRT_to_RNA(char PRT);
 char PRT_to_DNA(char PRT);
 
@@ -29,7 +29,7 @@ int main(void)
 	return 0;
 }
 
-char genRNAPRT()
+void genRNAPRT()
 {
     const size_t table_size = 64;
 
@@ -37,7 +37,7 @@ char genRNAPRT()
     
     if (hcreate(table_size) == 0) {
         fprintf(stderr, "Failed to create hash table\n");
-        return 1;
+        raise(SIGILL);
     }
 
     /* Defining the hashmap properly */ 
@@ -64,7 +64,7 @@ char genRNAPRT()
 
 }
 
-char genDNAPRT()
+void genDNAPRT()
 {
     size_t table_size = 64;
 
@@ -72,7 +72,7 @@ char genDNAPRT()
     
     if (hcreate(table_size) == 0) {
         fprintf(stderr, "Failed to create hash table\n");
-        return 1;
+        raise(SIGILL);
     }
 
     /* Defining the hashmap properly */ 
@@ -99,88 +99,103 @@ char genDNAPRT()
 
 }
 
-char DNA_to_RNA(char *DNA)
+char* DNA_to_RNA(char *DNA)
 {
 	/* Linear search function searching for "T" in the DNA strand and swapping them for an "U" */
 
-	int const length = sizeof(DNA) / sizeof(DNA[0]);
+	long const length = strlen(DNA);
 	char RNA[length];
-	for (int i=1; i<length; i++)
+	for (int i=0; i<length; i++)
 	{
-		if (DNA[i] == "T")
+		if (DNA[i] == 'T')
 		{
-			RNA[i] = "U";
+			RNA[i] = 'U';
 		}
 		else 
 		{
 			RNA[i] = DNA[i];
 		}
 	}
+	RNA[length] = '\0';
 	return RNA; 
 }
 
-char RNA_to_DNA(char *RNA)
+char* RNA_to_DNA(char *RNA)
 {
-	/* Linear search function searching for "U" in the RNA strand and swapping them for an "T" */ 
-	char DNA[];
-	int length = sizeof(RNA) / sizeof(RNA[0]);
+	/* Linear search function searching for "U" in the RNA strand and swapping them for an "T" */
+	long const length = strlen(RNA);
+	char DNA[length];
 	for (int i=1; i<length; i++)
 	{
-		if (RNA[i] == "T")
+		if (RNA[i] == 'T')
 		{
-			DNA[i] = "U";
+			DNA[i] = 'U';
 		}
 		else 
 		{
 			DNA[i] = RNA[i];
 		}
 	}
+	DNA[length] = '\0';
 	return DNA;
 }
 
-char RNA_to_PRT(char *PRT)
+char RNA_to_PRT(char *RNA)
 {
-	char PRT[];
-	int length = sizeof(RNA) / sizeof(RNA[0]);
-	map = genDNAPRT();
-	for (int i=1; i<lentgh; i++)
-	{
-		char *search_key = RNA[i];
-    		ENTRY item, *found;
-    		item.key = search_key;
+	genRNAPRT();
+	long rna_lentgh = strlen(RNA);
+	int num_condons = rna_lentgh / 3;
+	char PRT[num_condons];
 
-    		if ((found = hsearch(item, FIND)) != NULL) 
-    		{
-        		PRT[i]=;
-    		} 
-    		else 
-    		{       
-        	        PRT[i]="XRR";
-    		}
+	for (int i=0; i<num_condons; i++)
+	{
+		char codon[4];
+		strncpy(codon, &RNA[i * 3], 3);
+		codon[3] = '\0';
+
+		ENTRY item, *found;
+		item.key = codon;
+
+		if ((found = hsearch(item, ENTER)) == NULL)
+		{
+			strncpy(&PRT[i*3], (char *)found->data, 3);
+
+		}
+		else
+		{
+			strncpy(&PRT[i*3], "XRR", 3);
+		}
 	}
+	PRT[num_condons * 3] = '\0';
 	hdestroy();
-	return PRT
 }
 
-char DNA_to_PRT(char *PRT)
+char DNA_to_PRT(char *DNA)
 {
-	char PRT[];
-	int length = sizeof(DNA) / sizeof(DNA[0]);
-	genDNA = genDNAPRT();
-	for (int i=1; i<lentgh; i++)
-	{
-		char *search_key = DNA[i];
-    		ENTRY item, *found;
-    		item.key = search_key;
+	genDNAPRT();
+	long dna_lentgh = strlen(DNA);
+	int num_condons = dna_lentgh / 3;
+	char PRT[num_condons];
 
-    		if ((found = hsearch(item, FIND)) != NULL) 
-    		{
-        		PRT[i]=;
-    		} 
-    		else 
-    		{       
-        	        PRT[i]="XRR";
-    		}
+	for (int i=0; i<num_condons; i++)
+	{
+		char codon[4];
+		strncpy(codon, &DNA[i * 3], 3);
+		codon[3] = '\0';
+
+		ENTRY item, *found;
+		item.key = codon;
+
+		if ((found = hsearch(item, ENTER)) == NULL)
+		{
+			strncpy(&PRT[i*3], (char *)found->data, 3);
+
+		}
+		else
+		{
+			strncpy(&PRT[i*3], "XRR", 3);
+		}
 	}
-	return PRT
+	PRT[num_condons * 3] = '\0';
+	hdestroy();
 }
