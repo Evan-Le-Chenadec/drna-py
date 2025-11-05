@@ -1,5 +1,3 @@
-import cython
-
 list_RNAs = ["UUU", "UUC", "UUA", "UUG", "CUU", "CUC", "CUA", "CUG","AUU", "AUCU", "AUA", "AUG", "GUU", "GUC", "GUG", "GUA",
             "UCU", "UCC", "UCA", "UCG",  "CCU", "CCC", "CCA", "CCG", "ACU", "ACC", "ACA", "ACG", "GCU", "GCC", "GCG", "GCA",
             "UAU", "UAC", "UAA", "UAG", "CAU", "CAC", "CAA", "CAG", "AAU", "AAC", "AAA", "AAG", "GAU", "GAC", "GAG", "GAA",
@@ -40,6 +38,18 @@ def parser(strand):
     for i in range(len(strand)) :
         parsed.append(f"{strand[i]}")
     return parsed
+
+def ORF_search(list_DNA):
+    list_DNA = parser(list_DNA)
+    list_ORF = []
+    for i in range(len(list_DNA)-2):
+        codon = list_DNA[i]+list_DNA[i+1]+list_DNA[i+2]
+        temp = []
+        if codon == "ATC":
+            while codon != "TAA" or codon != "TGA" or codon != "TAG":
+                temp += codon
+        list_ORF.append(temp)
+    return list_ORF
 
 strand = ["A","A","A","A","A","A","A","A","A",]
 strand2 = "ATCTACGATCGACTAGCATGCGTATCGGTACGTATGCTGACTGATGCTGACTGATGCTGATGC"

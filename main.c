@@ -21,11 +21,6 @@ char DNA_to_PRT(char *DNA);
 char RNA_to_PRT(char *RNA);
 char* RNA_to_DNA(char *RNA);
 
-/* TODO for later because of a complex implementation*/
-/* How do you reverse a hashmap? */
-char PRT_to_RNA(char PRT);
-char PRT_to_DNA(char PRT);
-
 /* Test script*/ 
 int main(void)
 {
@@ -52,7 +47,7 @@ char* ORF_search(char *DNA) {
 		char codon[] = DNA[i]+DNA[i+1]+DNA[i+2];
 		if codon == 'ATC'
 		{
-			while (codon != 'TAA') or (codon != 'TGA') or (codon!= 'TAG'))
+			while (codon != 'TAA') or (codon != 'TGA') or (codon != 'TAG'))
 			{
 
 			}

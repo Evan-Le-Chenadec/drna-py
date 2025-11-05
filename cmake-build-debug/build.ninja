@@ -56,13 +56,6 @@ build CMakeFiles/DRNA.dir/main.c.o: C_COMPILER__DRNA_unscanned_Debug /home/evanl
   OBJECT_DIR = CMakeFiles/DRNA.dir
   OBJECT_FILE_DIR = CMakeFiles/DRNA.dir
 
-build CMakeFiles/DRNA.dir/aaah.c.o: C_COMPILER__DRNA_unscanned_Debug /home/evanlechenadec/Programmation/PubliGit/DRNA/aaah.c || cmake_object_order_depends_target_DRNA
-  CONFIG = Debug
-  DEP_FILE = CMakeFiles/DRNA.dir/aaah.c.o.d
-  FLAGS = -g -std=gnu11 -fdiagnostics-color=always
-  OBJECT_DIR = CMakeFiles/DRNA.dir
-  OBJECT_FILE_DIR = CMakeFiles/DRNA.dir
-
 
 # =============================================================================
 # Link build statements for EXECUTABLE target DRNA
@@ -71,7 +64,7 @@ build CMakeFiles/DRNA.dir/aaah.c.o: C_COMPILER__DRNA_unscanned_Debug /home/evanl
 #############################################
 # Link the executable DRNA
 
-build DRNA: C_EXECUTABLE_LINKER__DRNA_Debug CMakeFiles/DRNA.dir/main.c.o CMakeFiles/DRNA.dir/aaah.c.o
+build DRNA: C_EXECUTABLE_LINKER__DRNA_Debug CMakeFiles/DRNA.dir/main.c.o
   CONFIG = Debug
   FLAGS = -g
   OBJECT_DIR = CMakeFiles/DRNA.dir
