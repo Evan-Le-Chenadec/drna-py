@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/DRNA.iml" filepath="$PROJECT_DIR$/.idea/DRNA.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/drna-py.iml" filepath="$PROJECT_DIR$/.idea/drna-py.iml" />
     </modules>
   </component>
 </project>

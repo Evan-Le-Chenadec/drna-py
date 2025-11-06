@@ -1,4 +1,4 @@
-class DNA(list_DNA):
+class DNA():
     strand = ""
     def __init__(self):
         self.strand = str(input("Enter the strand here: s"))
@@ -28,6 +28,36 @@ class DNA(list_DNA):
                         break
         return list_ORF
 
+class RNA():
+    strand = ""
+    def __init__(self):
+        self.strand = str(input("Enter the strand here: s"))
+    def RNA_to_PRT (strand):
+        prt = []
+    #    if len(list_DNA)%3 != 0:
+    #        return "Incorrect Strand Size"
+        Ref_RNA_to_AA = dict(zip(strand, list_AAs))
+        for i in range(len(strand)-2):
+            prt.append(Ref_RNA_to_AA[strand[i]+strand[i+1]+strand[i+2]])
+        return prt
+    def RNA_to_DNA(list_RNA):
+        list_DNA = []
+        for i in range(len(list_RNA)):
+            if list_RNA[i] == "U":
+                list_RNA[i] = "T"
+            else:
+                list_DNA[i] = list_RNA[i]
+        return list_DNA
+    def ORF_search(list_RNA):
+        list_ORF = []
+        for i in range(len(list_RNA)-2):
+            if list_RNA[i:i+3] == 'AUG':
+                for j in range(i+3, len(list_RNA)-2, 3):
+                    if list_RNA[j:j+3] in ("UAA", "UAG", "UGA"):
+                        list_ORF.append(list_RNA[i:j+3])
+                        break
+        return list_ORF
+
 list_RNAs = ["UUU", "UUC", "UUA", "UUG", "CUU", "CUC", "CUA", "CUG","AUU", "AUC", "AUA", "AUG", "GUU", "GUC", "GUG", "GUA",
             "UCU", "UCC", "UCA", "UCG",  "CCU", "CCC", "CCA", "CCG", "ACU", "ACC", "ACA", "ACG", "GCU", "GCC", "GCG", "GCA",
             "UAU", "UAC", "UAA", "UAG", "CAU", "CAC", "CAA", "CAG", "AAU", "AAC", "AAA", "AAG", "GAU", "GAC", "GAG", "GAA",
@@ -39,9 +69,7 @@ list_AAs = ["Phe", "Phe", "Leu", "Leu", "Leu", "Leu", "Leu", "Leu", "Ile", "Ile"
 list_DNAs = ["TTT", "TTC", "TTA", "TTG", "CTT", "CTC", "CTA", "CTG","ATT", "ATC", "ATA", "ATG", "GTT", "GTC", "GTG", "GTA",
               "TCT", "TCC", "TCA", "TCG",  "CCT", "CCC", "CCA", "CCG", "ACT", "ACC", "ACA", "ACG", "GCT", "GCC", "GCG", "GCA",
               "TAT", "TAC", "TAA", "TAG", "CAT", "CAC", "CAA", "CAG", "AAT", "AAC", "AAA", "AAG", "GAT", "GAC", "GAG", "GAA",
-              "TGT", "TGC", "TGA", "TGG", "CGT", "CGC", "CGA", "CGG", "AGT", "AGC", "AGA", "AGG", "GGU", "GGC", "GGG", "GGA"]
-
-Ref_DNA_to_AA = dict(zip(list_DNAs, list_AAs))
+              "TGT", "TGC", "TGA", "TGG", "CGT", "CGC", "CGA", "CGG", "AGT", "AGC", "AGA", "AGG", "GGT", "GGC", "GGG", "GGA"]
 
 def RNA_to_PRT (list_RNA):
     prt = []
@@ -69,6 +97,7 @@ def DNA_to_RNA(list_DNA):
         else:
             list_RNA[i] = list_DNA[i]
     return list_RNA
+
 def ORF_search(list_DNA):
     list_ORF = []
     for i in range(len(list_DNA)-2):
@@ -79,9 +108,16 @@ def ORF_search(list_DNA):
                     break
     return list_ORF
 
+def ORF_to_PRT(strand):
+    orfs = ORF_search(strand)
+    prts = []
+    for i in range(len(orfs)):
+        prts.append(DNA_to_PRT(orfs[i]))
+    return prts
+    
+##Test script 
+
 with open("dummy.txt", 'r') as t:
     strand3 = t.read()
 
-orfs = ORF_search(strand3)
-prts = DNA_to_PRT((orfs))
-print(prts)
+print(ORF_to_PRT(strand3))
