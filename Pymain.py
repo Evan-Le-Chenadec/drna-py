@@ -15,7 +15,6 @@ Ref_DNA_to_AA = dict(zip(list_DNAs, list_AAs))
 
 def RNA_to_PRT (list_RNA):
     prt = []
-    list_RNA = parser((list_RNA))
     if len(list_RNA)%3 != 0:
         return "Incorrect Strand Size"
     Ref_RNA_to_AA = dict(zip(list_RNAs, list_AAs))
@@ -24,34 +23,23 @@ def RNA_to_PRT (list_RNA):
     return prt
 def DNA_to_RNA(list_DNA):
     list_RNA = []
-    list_DNA=parser((list_DNA))
     for i in range(len(list_DNA)):
         if list_DNA[i] == "T":
             list_RNA[i] = "U"
         else:
             list_RNA[i] = list_DNA[i]
     return list_RNA
-def parser(strand):
-    parsed=[]
-    if type(strand) != str:
-        raise Exception("Please input a string")
-    for i in range(len(strand)) :
-        parsed.append(f"{strand[i]}")
-    return parsed
-
 def ORF_search(list_DNA):
-    list_DNA = parser(list_DNA)
     list_ORF = []
     for i in range(len(list_DNA)-2):
-        codon = list_DNA[i]+list_DNA[i+1]+list_DNA[i+2]
-        temp = []
-        if codon == "ATC":
-            while codon != "TAA" or codon != "TGA" or codon != "TAG":
-                temp += codon
-        list_ORF.append(temp)
+        if list_DNA[i:i+3] == 'ATG':
+            for j in range(i+3, len(list_DNA)-2, 3):
+                if list_DNA[j:j+3] in ("TAA", "TAG", "TGA"):
+                    list_ORF.append(list_DNA[i:j+3])
+                    break
     return list_ORF
 
-strand = ["A","A","A","A","A","A","A","A","A",]
-strand2 = "ATCTACGATCGACTAGCATGCGTATCGGTACGTATGCTGACTGATGCTGACTGATGCTGATGC"
+with open("dummy.txt", 'r') as t:
+    strand3 = t.read()
 
-print(RNA_to_PRT((strand2)))
+print(ORF_search(strand3))
