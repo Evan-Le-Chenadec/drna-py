@@ -1,0 +1,26 @@
+[build-system]
+requires = ["hatchling >= 1.26"]
+build-backend = "hatchling.build"
+
+[project]
+name = "drna-py"
+version = "0.0.1"
+authors = [
+    { name="Le Chenadec Evan", email="evan.lechenadec@entpe.fr" },
+]
+description = "A Python librabry of functions to manipulate and analyse DNA, RNA and protein sequences. "
+readme = "README.md"
+requires-python = ">=3.9"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+license = "APACHE-2.0"
+license-files = ["LICEN[CS]E*"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/drna-py"]
+
+[project.urls]
+Homepage = "https://github.com/Evan-Le-Chenadec/drna-py"
+Issues = "https://github.com/Evan-Le-Chenadec/drna-py/issues"
