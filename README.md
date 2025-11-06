@@ -1,6 +1,5 @@
-# DRNA
-A simple library to convert DNA strands or RNA strands in the form of an array of character into another array of 
-character representing the alpha-amino acids making up the protein. 
+# drna-py
+A simple Python library of functions to manipulate and analyse DNA, RNA and protein sequences.
 
 ## I) Functions
 ### 1) DNA_to_RNA and RNA_to_DNA
@@ -11,7 +10,7 @@ in linear time.
 
 ### 2) DNA_to_PRT and RNA_to_PRT
 
-Those functions convert either a DNA strand or a RNA strand in the form of a string into a list of amino-acids 
+Those functions convert either a DNA strand or an RNA strand in the form of a string into a list of amino-acids 
 represented by their 3 letters acronyms in the form of a string (ex; "Lys"). It first create a dictionnary with either
 the list_DNAs/list_RNAs and the list_AAs. Then, it iterates through the strand by step of three (the codon variable) and
 search in the dictionnary the corresponding amino acid. 
