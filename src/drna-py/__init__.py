@@ -71,16 +71,25 @@ list_DNAs = ["TTT", "TTC", "TTA", "TTG", "CTT", "CTC", "CTA", "CTG","ATT", "ATC"
              "TAT", "TAC", "TAA", "TAG", "CAT", "CAC", "CAA", "CAG", "AAT", "AAC", "AAA", "AAG", "GAT", "GAC", "GAG", "GAA",
              "TGT", "TGC", "TGA", "TGG", "CGT", "CGC", "CGA", "CGG", "AGT", "AGC", "AGA", "AGG", "GGT", "GGC", "GGG", "GGA"]
 
-def RNA_to_PRT (list_RNA):
-    prt = []
-    if len(list_RNA)%3 != 0:
-        return "Incorrect Strand Size"
-    Ref_RNA_to_AA = dict(zip(list_RNAs, list_AAs))
-    for i in range(len(list_RNA)-2):
-        prt.append(Ref_RNA_to_AA[list_RNA[i]+list_RNA[i+1]+list_RNA[i+2]])
-    return prt
-
+def DNA_to_RNA(list_DNA):
+    """Converts a DNA strand into a RNA strand"""
+    list_RNA = []
+    for i in range(len(list_DNA)):
+        if list_DNA[i] == "T":
+            list_RNA[i] = "U"
+        else:
+            list_RNA[i] = list_DNA[i]
+    return list_RNA
+def RNA_to_DNA(list_RNA):
+    list_DNA = []
+    for i in range(len(list_RNA)):
+        if list_RNA[i] == "U":
+            list_RNA[i] = "T"
+        else:
+            list_DNA[i] = list_RNA[i]
+    return list_DNA
 def DNA_to_PRT (list_DNA):
+    """Converts a DNA strands into a protein sequence"""
     prt = []
     #    if len(list_DNA)%3 != 0:
     #        return "Incorrect Strand Size"
@@ -89,16 +98,18 @@ def DNA_to_PRT (list_DNA):
         prt.append(Ref_DNA_to_AA[list_DNA[i]+list_DNA[i+1]+list_DNA[i+2]])
     return prt
 
-def DNA_to_RNA(list_DNA):
-    list_RNA = []
-    for i in range(len(list_DNA)):
-        if list_DNA[i] == "T":
-            list_RNA[i] = "U"
-        else:
-            list_RNA[i] = list_DNA[i]
-    return list_RNA
+def RNA_to_PRT (list_RNA):
+    """ Convert an RNA strand into a DNA strand"""
+    prt = []
+    if len(list_RNA)%3 != 0:
+        return "Incorrect Strand Size"
+    Ref_RNA_to_AA = dict(zip(list_RNAs, list_AAs))
+    for i in range(len(list_RNA)-2):
+        prt.append(Ref_RNA_to_AA[list_RNA[i]+list_RNA[i+1]+list_RNA[i+2]])
+    return prt
 
-def ORF_search(list_DNA):
+def ORF_search_DNA(list_DNA):
+    """Search through a DNA strand to find the ORFs"""
     list_ORF = []
     for i in range(len(list_DNA)-2):
         if list_DNA[i:i+3] == 'ATG':
@@ -108,9 +119,28 @@ def ORF_search(list_DNA):
                     break
     return list_ORF
 
-def ORF_to_PRT(strand):
-    orfs = ORF_search(strand)
+def ORF_search_RNA(list_RNA):
+    """Search through a RNA strand to find the ORFs"""
+    list_ORF = []
+    for i in range(len(list_RNA)-2):
+        if list_RNA[i:i+3] == 'AUG':
+            for j in range(i+3, len(list_RNA)-2, 3):
+                if list_RNA[j:j+3] in ("UAA", "UAG", "UGA"):
+                    list_ORF.append(list_RNA[i:j+3])
+                    break
+    return list_ORF
+def DNA_ORF_to_PRT(strand):
+    """Converts the ORF into the protein proper"""
+    orfs = ORF_search_DNA(strand)
     prts = []
     for i in range(len(orfs)):
         prts.append(DNA_to_PRT(orfs[i]))
+    return prts
+
+def RNA_ORF_to_PRT(strand):
+    """Converts the ORF into the protein proper"""
+    orfs = ORF_search_RNA(strand)
+    prts = []
+    for i in range(len(orfs)):
+        prts.append(RNA_to_PRT(orfs[i]))
     return prts
